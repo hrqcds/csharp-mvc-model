@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controllers;
@@ -8,6 +9,7 @@ public class HomeController : ControllerBase
 {
 
     [HttpGet()]
+    [AllowAnonymous]
     public IActionResult Get()
     {
         return Ok("Server is running");

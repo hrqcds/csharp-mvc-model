@@ -75,3 +75,18 @@ public struct UpdateUserRequest
     [MinLength(6)]
     public string? Password { get; set; }
 }
+
+public class LoginRequest
+{
+    [Required]
+    public string Register { get; set; } = null!;
+    [Required]
+    public string Password { get; set; } = null!;
+}
+
+public class LoginResponse
+{
+    public string Token { get; set; } = null!;
+    public string Register { get; set; } = null!;
+    public string Role { get; set; } = null!;
+}

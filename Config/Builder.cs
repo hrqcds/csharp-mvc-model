@@ -18,13 +18,20 @@ public class BuilderConfig
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+
+        builder.Services
+            .AddSwaggerGen((options) =>
+                {
+                    SwaggerConfig.SwaggerConfigAuthentication(options);
+                });
 
         builder.Services.AddDbContext<Context>(
             options => options.UseSqlServer(builder.Configuration.GetConnectionString("db"))
         );
 
         builder.Services.AddScoped<IUserRepository, UserEntityRepository>();
+
+        AuthConfig.Execute(builder);
 
         return builder.Build();
     }

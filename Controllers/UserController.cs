@@ -4,6 +4,7 @@ using Services;
 using Repositories;
 using Exceptions;
 using Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Controllers;
 
@@ -20,6 +21,7 @@ public class UsersController : ControllerBase
 
     [HttpGet()]
     [ProducesResponseType(typeof(IEnumerable<User>), StatusCodes.Status200OK)]
+    [Authorize("IT")]
     public async Task<IActionResult> Get([FromQuery] UserQueryRequest query)
     {
         return Ok(await _userService.GetALL(query));

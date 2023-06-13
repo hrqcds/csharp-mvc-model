@@ -12,6 +12,12 @@ public class ConfigApp
 
         app.UseHttpsRedirection();
 
+        app.UseCors(opt => opt
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
