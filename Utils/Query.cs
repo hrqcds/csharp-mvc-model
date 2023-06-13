@@ -12,3 +12,11 @@ public class UserQueryRequest
     public Roles? Role { get; set; }
     public bool? Enable { get; set; } = true;
 }
+
+public class ParamQueryRequest
+{
+    public int? Take { get; set; } = 25;
+    public int? Skip { get; set; } = 0;
+    public string? ValueLog { get; set; }
+    public string? ValueConverted { get; set; }
+}

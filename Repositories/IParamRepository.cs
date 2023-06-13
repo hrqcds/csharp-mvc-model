@@ -1,10 +1,17 @@
 using Models;
+using Utils;
 
 namespace Repositories;
 
 public interface IParamRepository
 {
     Task<Param> Create(Param param);
+
+    Task<List<Param>> GetAll(ParamQueryRequest query);
+
+    Task<int> Count(ParamQueryRequest query);
+
+    Task<Param?> GetById(string id);
 
     Task<Param?> GetByValueLog(string valueLog);
 
