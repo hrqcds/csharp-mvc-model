@@ -29,7 +29,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost()]
-    [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CreateUserResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create(CreateUserRequest request)
     {
         try
