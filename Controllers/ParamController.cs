@@ -1,9 +1,11 @@
 using Exceptions;
+using Generics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Repositories;
 using Services;
+using Utils;
 
 namespace Controllers;
 
@@ -34,6 +36,32 @@ public class ParamController : ControllerBase
             return e.Error["status"] switch
             {
                 400 => BadRequest(e.Error),
+                _ => StatusCode(500, e.Error)
+            };
+        }
+    }
+
+    [HttpGet()]
+    [ProducesResponseType(typeof(DataResponse<Param>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll([FromQuery] ParamQueryRequest query)
+    {
+        return Ok(await _paramService.GetAll(query));
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Param), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetById(string id)
+    {
+        try
+        {
+            return Ok(await _paramService.GetById(id));
+        }
+        catch (ErrorExceptions e)
+        {
+            return e.Error["status"] switch
+            {
+                400 => BadRequest(e.Error),
+                404 => NotFound(e.Error),
                 _ => StatusCode(500, e.Error)
             };
         }
