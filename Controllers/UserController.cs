@@ -29,6 +29,7 @@ public class UsersController : ControllerBase
 
     [HttpPost()]
     [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
+    [Authorize("IT")]
     public async Task<IActionResult> Create(CreateUserRequest request)
     {
         try
@@ -48,6 +49,7 @@ public class UsersController : ControllerBase
 
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+    [Authorize("IT")]
     public async Task<IActionResult> GetById(string id)
     {
         try
@@ -66,6 +68,7 @@ public class UsersController : ControllerBase
 
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+    [Authorize("IT")]
     public async Task<IActionResult> Update(string id, UpdateUserRequest request)
     {
         try
@@ -85,6 +88,7 @@ public class UsersController : ControllerBase
 
     [HttpPut("enable/{id}")]
     [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+    [Authorize("IT")]
     public async Task<IActionResult> Enable(string id)
     {
         try
@@ -102,6 +106,7 @@ public class UsersController : ControllerBase
     }
     [HttpPut("disable/{id}")]
     [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+    [Authorize("IT")]
     public async Task<IActionResult> Disable(string id)
     {
         try
