@@ -25,7 +25,7 @@ public class GenerateToken
             Subject = new ClaimsIdentity(new Claim[]
             {
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim("Role", GetRole(user.Role))
+                    new Claim(ClaimTypes.Role, GetRole(user.Role))
             }),
             Expires = DateTime.UtcNow.AddHours(8),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -39,9 +39,10 @@ public class GenerateToken
     {
         return role switch
         {
-            Roles.IT => "IT",
+            Roles.ADM => "ADM",
+            Roles.TI => "TI",
             Roles.ENG => "ENG",
-            _ => "IT"
+            _ => "MAT"
         };
     }
 }

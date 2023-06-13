@@ -30,8 +30,10 @@ public class AuthConfig
         builder.Services.AddAuthorization(
             opt =>
             {
-                opt.AddPolicy("IT", policy => policy.RequireClaim("Role", "IT"));
-                opt.AddPolicy("ENG", policy => policy.RequireClaim("Role", "ENG"));
+                opt.AddPolicy("TI", policy => policy.RequireRole("TI"));
+                opt.AddPolicy("ENG", policy => policy.RequireRole("ENG"));
+                opt.AddPolicy("MAT", policy => policy.RequireRole("MAT"));
+                opt.AddPolicy("ADM", policy => policy.RequireRole("ADM"));
             }
         );
 

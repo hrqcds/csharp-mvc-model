@@ -19,7 +19,7 @@ public class AuthService
 
     public async Task<LoginResponse> Login(LoginRequest request)
     {
-        var user = await userRepository.GetByRegister(request.Register);
+        var user = await userRepository.GetByEmail(request.Email);
 
         if (user == null)
         {

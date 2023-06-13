@@ -18,7 +18,7 @@ public class User
     [MaxLength(100)]
     public string Email { get; set; } = null!;
     [Required]
-    public Roles Role { get; set; } = Roles.IT;
+    public Roles Role { get; set; } = Roles.TI;
     [Required]
     [JsonIgnore]
     public string Password { get; set; } = null!;
@@ -39,8 +39,10 @@ public class User
 
 public enum Roles
 {
-    IT,
-    ENG
+    TI,
+    ENG,
+    MAT,
+    ADM
 }
 
 public struct CreateUserRequest
@@ -57,8 +59,11 @@ public struct CreateUserRequest
     [Required(ErrorMessage = "Role is required")]
     [EnumDataType(typeof(Roles))]
     public Roles Role { get; set; }
-    [Required]
-    [MinLength(6)]
+}
+
+public struct CreateUserResponse
+{
+    public string Message { get; set; }
     public string Password { get; set; }
 }
 
@@ -79,8 +84,10 @@ public struct UpdateUserRequest
 public class LoginRequest
 {
     [Required]
-    public string Register { get; set; } = null!;
+    [EmailAddress(ErrorMessage = "Email is invalid")]
+    public string Email { get; set; } = null!;
     [Required]
+    [MinLength(6)]
     public string Password { get; set; } = null!;
 }
 

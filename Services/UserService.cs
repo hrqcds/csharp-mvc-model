@@ -44,7 +44,7 @@ public class UserService
         return user;
     }
 
-    public async Task<User?> Create(CreateUserRequest request)
+    public async Task<CreateUserResponse?> Create(CreateUserRequest request)
     {
         var registerAlreadyExist = await userRepository.GetByRegister(request.Register);
 
@@ -61,15 +61,27 @@ public class UserService
         if (Error.Count > 0)
             throw new ErrorExceptions("Error on create user", 400, Error);
 
+        var password = Guid.NewGuid().ToString().Replace("-", "");
+        if (password.Length > 8)
+            password = password[..8];
+
+        var password_hash = HashPassword.Generate(password);
+
         var user = new User()
         {
             Name = request.Name,
             Email = request.Email,
             Register = request.Register,
-            Password = HashPassword.Generate(request.Password)
+            Password = password_hash
         };
 
-        return await userRepository.Create(user);
+        await userRepository.Create(user);
+
+        return new CreateUserResponse()
+        {
+            Message = "Users successfully created",
+            Password = password
+        };
     }
 
     public async Task<User?> Update(string id, UpdateUserRequest request)
