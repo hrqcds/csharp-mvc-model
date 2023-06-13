@@ -1,6 +1,8 @@
 using Exceptions;
+using Generics;
 using Models;
 using Repositories;
+using Utils;
 
 namespace Services;
 
@@ -41,5 +43,30 @@ public class ParamService
         };
 
         return await paramRepository.Create(param);
+    }
+
+    public async Task<DataResponse<Param>> GetAll(ParamQueryRequest query)
+    {
+        var param = await paramRepository.GetAll(query);
+        var count = await paramRepository.Count(query);
+
+        return new DataResponse<Param>()
+        {
+            Data = param,
+            Total = count
+        };
+    }
+
+    public async Task<Param?> GetById(string id)
+    {
+        var param = await paramRepository.GetById(id);
+
+        if (param == null)
+        {
+            Error.Add("Param", new string[] { "Param not found" });
+            throw new ErrorExceptions("Param not found", 404, Error);
+        }
+
+        return param;
     }
 }
