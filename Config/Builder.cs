@@ -30,6 +30,7 @@ public class BuilderConfig
         );
 
         builder.Services.AddScoped<IUserRepository, UserEntityRepository>();
+        builder.Services.AddScoped<IParamRepository, ParamEntityRepository>();
 
         AuthConfig.Execute(builder);
 
