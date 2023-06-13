@@ -19,7 +19,7 @@ public class AuthService
 
     public async Task<LoginResponse> Login(LoginRequest request)
     {
-        var user = await userRepository.GetByEmail(request.Email);
+        var user = await userRepository.GetByRegister(request.Register);
 
         if (user == null)
         {
@@ -27,11 +27,6 @@ public class AuthService
             throw new ErrorExceptions("User not found", 404, Error);
         }
 
-        if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
-        {
-            Error.Add("Login", new string[] { "User or Password Incorrect" });
-            throw new ErrorExceptions("Login Failure", 400, Error);
-        }
         var gen = new GenerateToken(configuration);
         return new LoginResponse()
         {

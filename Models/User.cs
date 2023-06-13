@@ -19,9 +19,7 @@ public class User
     public string Email { get; set; } = null!;
     [Required]
     public Roles Role { get; set; } = Roles.TI;
-    [Required]
-    [JsonIgnore]
-    public string Password { get; set; } = null!;
+
     [JsonIgnore]
     public DateTime? Created_at { get; set; }
     [JsonIgnore]
@@ -64,7 +62,6 @@ public struct CreateUserRequest
 public struct CreateUserResponse
 {
     public string Message { get; set; }
-    public string Password { get; set; }
 }
 
 public struct UpdateUserRequest
@@ -77,17 +74,13 @@ public struct UpdateUserRequest
     public string? Email { get; set; }
     [EnumDataType(typeof(Roles))]
     public Roles? Role { get; set; }
-    [MinLength(6)]
-    public string? Password { get; set; }
 }
 
 public class LoginRequest
 {
     [Required]
-    [EmailAddress(ErrorMessage = "Email is invalid")]
-    public string Email { get; set; } = null!;
+    public string Register { get; set; } = null!;
     [Required]
-    [MinLength(6)]
     public string Password { get; set; } = null!;
 }
 

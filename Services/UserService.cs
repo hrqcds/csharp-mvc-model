@@ -27,8 +27,6 @@ public class UserService
             Total = count
         };
 
-
-
     }
 
     public async Task<User> GetUserById(string id)
@@ -61,18 +59,11 @@ public class UserService
         if (Error.Count > 0)
             throw new ErrorExceptions("Error on create user", 400, Error);
 
-        var password = Guid.NewGuid().ToString().Replace("-", "");
-        if (password.Length > 8)
-            password = password[..8];
-
-        var password_hash = HashPassword.Generate(password);
-
         var user = new User()
         {
             Name = request.Name,
             Email = request.Email,
             Register = request.Register,
-            Password = password_hash
         };
 
         await userRepository.Create(user);
@@ -80,7 +71,6 @@ public class UserService
         return new CreateUserResponse()
         {
             Message = "Users successfully created",
-            Password = password
         };
     }
 
@@ -136,11 +126,6 @@ public class UserService
             if (user.Role != request.Role && request.Role != null)
             {
                 user.Role = (Roles)request.Role;
-            }
-
-            if (request.Password != null)
-            {
-                user.Password = HashPassword.Generate(request.Password);
             }
         }
 
