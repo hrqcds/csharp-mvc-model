@@ -16,8 +16,3 @@ public class HashPassword
         return result;
     }
 }
-
-public class HashPasswordStruct
-{
-    public string Register { get; set; } = null!;
-}
