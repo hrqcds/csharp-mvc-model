@@ -126,4 +126,58 @@ public class ParamService
 
         return await paramRepository.Delete(param);
     }
+
+    public async Task Import(IFormFile file)
+    {
+        var f = file.OpenReadStream();
+        var reader = new StreamReader(f);
+
+        var param_list = new List<Param>();
+        while (!reader.EndOfStream)
+        {
+            var line = await reader.ReadLineAsync();
+            // estrutura do arquivo: "item1, item2;"
+            var values = line!.Split(',');
+            if (values.Length > 2)
+            {
+                Error.Add("Import", new string[] { "Import failed" });
+            }
+            var param = new Param()
+            {
+                ValueLog = values[0],
+                ValueConverted = values[1].Split(";")[0].Trim()
+            };
+            param_list.Add(param);
+        }
+
+        foreach (var param in param_list)
+        {
+
+            var valueLogExist = await paramRepository.GetByValueLog(param.ValueLog);
+
+            if (valueLogExist != null)
+            {
+                Error.Add("ValueLog", new string[] { $"Value '{param.ValueLog}' Log already exist" });
+            }
+
+            var valueConvertedExist = await paramRepository.GetByValueConverted(param.ValueConverted);
+
+            if (valueConvertedExist != null)
+            {
+                Error.Add("ValueConverted", new string[] { $"Value '{param.ValueConverted}' Converted already exist" });
+            }
+
+        }
+
+        if (Error.Count > 0)
+            throw new ErrorExceptions("Params in file already exist", 400, Error);
+
+        var result = await paramRepository.Import(param_list);
+        if (result == 0)
+        {
+            Error.Add("Import", new string[] { "Import failed" });
+            throw new ErrorExceptions("Import failed", 500, Error);
+        }
+
+    }
 }

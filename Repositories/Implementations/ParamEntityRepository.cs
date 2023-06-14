@@ -72,4 +72,14 @@ public class ParamEntityRepository : IParamRepository
 
         return p.Entity;
     }
+
+    public async Task<int> Import(IEnumerable<Param> list)
+    {
+        foreach (var p in list)
+        {
+            context.Params.Add(p);
+        }
+        var result = await context.SaveChangesAsync();
+        return result;
+    }
 }

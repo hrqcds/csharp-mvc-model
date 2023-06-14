@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Text;
 using Exceptions;
 using Generics;
 using Microsoft.AspNetCore.Authorization;
@@ -103,5 +105,39 @@ public class ParamController : ControllerBase
                 _ => StatusCode(500, e.Error)
             };
         }
+    }
+
+    [HttpPost("import")]
+    [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> Import(IFormFile file)
+    {
+        try
+        {
+            await _paramService.Import(file);
+            return Ok("Import Success");
+        }
+        catch (ErrorExceptions e)
+        {
+            return e.Error["status"] switch
+            {
+                400 => BadRequest(e.Error),
+                404 => NotFound(e.Error),
+                _ => StatusCode(500, e.Error)
+            };
+        }
+
+    }
+}
+
+internal class CsvReader
+{
+    private StreamReader reader;
+    private object invariantCulture;
+
+    public CsvReader(StreamReader reader, object invariantCulture)
+    {
+        this.reader = reader;
+        this.invariantCulture = invariantCulture;
     }
 }

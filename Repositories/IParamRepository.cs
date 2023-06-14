@@ -20,4 +20,6 @@ public interface IParamRepository
     Task<Param?> GetByValueLog(string valueLog);
 
     Task<Param?> GetByValueConverted(string valueConverted);
+
+    Task<int> Import(IEnumerable<Param> list);
 }
