@@ -9,6 +9,8 @@ public interface IParamRepository
 
     Task<Param?> Update(Param param);
 
+    Task<Param?> Delete(Param id);
+
     Task<List<Param>> GetAll(ParamQueryRequest query);
 
     Task<int> Count(ParamQueryRequest query);

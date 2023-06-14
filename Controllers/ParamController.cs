@@ -85,4 +85,23 @@ public class ParamController : ControllerBase
             };
         }
     }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(Param), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Delete(string id)
+    {
+        try
+        {
+            return Ok(await _paramService.Delete(id));
+        }
+        catch (ErrorExceptions e)
+        {
+            return e.Error["status"] switch
+            {
+                400 => BadRequest(e.Error),
+                404 => NotFound(e.Error),
+                _ => StatusCode(500, e.Error)
+            };
+        }
+    }
 }

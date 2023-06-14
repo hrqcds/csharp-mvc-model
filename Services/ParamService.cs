@@ -108,4 +108,17 @@ public class ParamService
 
         return await paramRepository.Update(param);
     }
+
+    public async Task<Param?> Delete(string id)
+    {
+        var param = await paramRepository.GetById(id);
+
+        if (param == null)
+        {
+            Error.Add("Param", new string[] { "Param not found" });
+            throw new ErrorExceptions("Param not found", 404, Error);
+        }
+
+        return await paramRepository.Delete(param);
+    }
 }

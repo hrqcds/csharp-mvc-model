@@ -64,4 +64,12 @@ public class ParamEntityRepository : IParamRepository
         await context.SaveChangesAsync();
         return p.Entity;
     }
+
+    public async Task<Param?> Delete(Param param)
+    {
+        var p = context.Params.Remove(param);
+        await context.SaveChangesAsync();
+
+        return p.Entity;
+    }
 }
