@@ -44,4 +44,6 @@ public struct UpdateParamRequest
     public string? ValueLog { get; set; }
 
     public string? ValueConverted { get; set; }
+
+    public bool? IsToSend { get; set; }
 }

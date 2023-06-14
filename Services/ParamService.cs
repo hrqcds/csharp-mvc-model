@@ -100,6 +100,11 @@ public class ParamService
             }
         }
 
+        if (request.IsToSend != null)
+        {
+            param.IsToSend = request.IsToSend ?? param.IsToSend;
+        }
+
         if (Error.Count > 0)
             throw new ErrorExceptions("Param already exist", 400, Error);
 
