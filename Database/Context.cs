@@ -28,6 +28,22 @@ public class Context : DbContext
             Email = "adm@adm.com",
             Role = Roles.ADM
         });
+        modelBuilder.Entity<User>().HasData(new User()
+        {
+            ID = Guid.NewGuid().ToString(),
+            Name = "mat",
+            Register = "mat",
+            Email = "mat@mat.com",
+            Role = Roles.MAT
+        });
+        modelBuilder.Entity<User>().HasData(new User()
+        {
+            ID = Guid.NewGuid().ToString(),
+            Name = "eng",
+            Register = "eng",
+            Email = "eng@eng.com",
+            Role = Roles.ENG
+        });
     }
 
 }
