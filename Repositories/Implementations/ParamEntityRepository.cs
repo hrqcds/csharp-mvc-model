@@ -38,8 +38,6 @@ public class ParamEntityRepository : IParamRepository
                     .Params
                     .Where(p => p.ValueLog.Contains(query.ValueLog ?? ""))
                     .Where(p => p.ValueConverted.Contains(query.ValueConverted ?? ""))
-                    .Skip(query.Skip ?? 0)
-                    .Take(query.Take ?? 10)
                     .CountAsync();
     }
 
