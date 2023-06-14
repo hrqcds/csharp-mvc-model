@@ -30,8 +30,8 @@ public class User
 
     public User()
     {
-        this.Created_at = DateTime.UtcNow;
-        this.Updated_at = DateTime.UtcNow;
+        Created_at = DateTime.UtcNow;
+        Updated_at = DateTime.UtcNow;
     }
 }
 
