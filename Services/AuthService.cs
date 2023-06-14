@@ -31,6 +31,7 @@ public class AuthService
         return new LoginResponse()
         {
             Token = gen.Execute(user),
+            Name = user.Name,
             Register = user.Register,
             Role = gen.GetRole(user.Role)
         };
