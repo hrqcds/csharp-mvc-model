@@ -7,6 +7,8 @@ public interface IParamRepository
 {
     Task<Param> Create(Param param);
 
+    Task<Param?> Update(Param param);
+
     Task<List<Param>> GetAll(ParamQueryRequest query);
 
     Task<int> Count(ParamQueryRequest query);
@@ -16,5 +18,4 @@ public interface IParamRepository
     Task<Param?> GetByValueLog(string valueLog);
 
     Task<Param?> GetByValueConverted(string valueConverted);
-
 }

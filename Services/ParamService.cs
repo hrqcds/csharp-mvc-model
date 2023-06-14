@@ -69,4 +69,43 @@ public class ParamService
 
         return param;
     }
+
+    public async Task<Param?> Update(string id, UpdateParamRequest request)
+    {
+        var param = await paramRepository.GetById(id);
+
+        if (param == null)
+        {
+            Error.Add("Param", new string[] { "Param not found" });
+            throw new ErrorExceptions("Param not found", 404, Error);
+        }
+
+        if (request.ValueLog != null)
+        {
+            var valueLogExist = await paramRepository.GetByValueLog(request.ValueLog);
+
+            if (valueLogExist != null)
+            {
+                Error.Add("ValueLog", new string[] { "Value Log already exist" });
+            }
+        }
+
+        if (request.ValueConverted != null)
+        {
+            var valueConvertedExist = await paramRepository.GetByValueConverted(request.ValueConverted);
+
+            if (valueConvertedExist != null)
+            {
+                Error.Add("ValueConverted", new string[] { "Value Converted already exist" });
+            }
+        }
+
+        if (Error.Count > 0)
+            throw new ErrorExceptions("Param already exist", 400, Error);
+
+        param.ValueLog = request.ValueLog ?? param.ValueLog;
+        param.ValueConverted = request.ValueConverted ?? param.ValueConverted;
+
+        return await paramRepository.Update(param);
+    }
 }

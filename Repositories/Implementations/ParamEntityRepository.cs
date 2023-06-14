@@ -57,4 +57,11 @@ public class ParamEntityRepository : IParamRepository
     {
         return await context.Params.FirstOrDefaultAsync(x => x.ValueLog == valueLog);
     }
+
+    public async Task<Param?> Update(Param param)
+    {
+        var p = context.Params.Update(param);
+        await context.SaveChangesAsync();
+        return p.Entity;
+    }
 }

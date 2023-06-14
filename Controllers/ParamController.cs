@@ -66,4 +66,23 @@ public class ParamController : ControllerBase
             };
         }
     }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(Param), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Update(string id, UpdateParamRequest request)
+    {
+        try
+        {
+            return Ok(await _paramService.Update(id, request));
+        }
+        catch (ErrorExceptions e)
+        {
+            return e.Error["status"] switch
+            {
+                400 => BadRequest(e.Error),
+                404 => NotFound(e.Error),
+                _ => StatusCode(500, e.Error)
+            };
+        }
+    }
 }

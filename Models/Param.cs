@@ -34,7 +34,14 @@ public struct CreateParamRequest
 {
     [Required(ErrorMessage = "ValueLog is required")]
     public string ValueLog { get; set; }
-    
+
     [Required(ErrorMessage = "ValueConverted is required")]
     public string ValueConverted { get; set; }
+}
+
+public struct UpdateParamRequest
+{
+    public string? ValueLog { get; set; }
+
+    public string? ValueConverted { get; set; }
 }
