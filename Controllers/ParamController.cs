@@ -129,15 +129,3 @@ public class ParamController : ControllerBase
 
     }
 }
-
-internal class CsvReader
-{
-    private StreamReader reader;
-    private object invariantCulture;
-
-    public CsvReader(StreamReader reader, object invariantCulture)
-    {
-        this.reader = reader;
-        this.invariantCulture = invariantCulture;
-    }
-}
